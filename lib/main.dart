@@ -144,7 +144,6 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
     Map<String, Map<String, dynamic>> outSchemas,
   ) {
     if (obj is! Map<String, dynamic>) return;
-
     if (outSchemas.containsKey(className)) return;
 
     outSchemas[className] = {};
@@ -222,7 +221,6 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
       if (type is String &&
           type.startsWith('List<') &&
           _isCustomClass(type.substring(5, type.length - 1))) {
-        final itemType = type.substring(5, type.length - 1);
         buffer.writeln("      '$key': $key?.map((x) => x.toJson()).toList(),");
       } else if (_isCustomClass(type)) {
         buffer.writeln("      '$key': $key?.toJson(),");
@@ -274,38 +272,78 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Row(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = constraints.maxWidth > 600;
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _classNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Class Name',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12),
                 Row(
                   children: [
-                    Checkbox(
-                      value: _nullSafety,
-                      onChanged: (val) {
-                        setState(() {
-                          _nullSafety = val ?? true;
-                        });
-                      },
+                    Expanded(
+                      child: TextField(
+                        controller: _classNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Class Name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
                     ),
-                    Text('Null Safety'),
+                    SizedBox(width: 12),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _nullSafety,
+                          onChanged: (val) {
+                            setState(() {
+                              _nullSafety = val ?? true;
+                            });
+                          },
+                        ),
+                        Text('Null Safety'),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+                Expanded(
+                  child: isWide
+                      ? Row(children: _buildEditorPanels())
+                      : Column(children: _buildEditorPanels()),
+                ),
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: _convertJsonToDart,
+                        child: Text('Convert'),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    ElevatedButton(onPressed: _clear, child: Text('Clear')),
+                    SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: _loadSampleJson,
+                      child: Text('Load Sample'),
+                    ),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 12),
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> _buildEditorPanels() {
+    return [
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text('Paste your JSON here:'),
             SizedBox(height: 8),
             Expanded(
@@ -319,26 +357,14 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
                 ),
               ),
             ),
-            SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _convertJsonToDart,
-                    
-                    child: Text('Convert'),
-                  ),
-                ),
-                SizedBox(width: 8),
-                ElevatedButton(onPressed: _clear, child: Text('Clear')),
-                SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _loadSampleJson,
-                  child: Text('Load Sample'),
-                ),
-              ],
-            ),
-            SizedBox(height: 12),
+          ],
+        ),
+      ),
+      SizedBox(width: 12, height: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -349,17 +375,27 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
                 ),
               ],
             ),
+            SizedBox(height: 8),
             Expanded(
-              child: SingleChildScrollView(
-                child: SelectableText(
-                  _dartCode,
-                  style: TextStyle(fontFamily: 'Courier'),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Theme.of(context).dividerColor),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: EdgeInsets.all(8),
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    _dartCode.isEmpty
+                        ? 'Your Dart model will appear here...'
+                        : _dartCode,
+                    style: TextStyle(fontFamily: 'Courier'),
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
+    ];
   }
 }
