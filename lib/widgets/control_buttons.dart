@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:json_convert_dart/widgets/app_color.dart';
+import 'package:json_convert_dart/widgets/app_style.dart';
+import 'package:json_convert_dart/widgets/rounded_button.dart';
 
 class ControlButtons extends StatelessWidget {
   final VoidCallback onConvert;
@@ -17,20 +20,28 @@ class ControlButtons extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: ElevatedButton(
-            onPressed: onConvert,
-            child: const Text('Convert'),
+          child: RoundedButton(
+            text: 'Convet Json to Dart',
+            onPress: onConvert,
+            borderRadius: AppStyle.SPACING_24,
           ),
         ),
-        const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: onClear,
-          child: const Text('Clear'),
+        const SizedBox(width: AppStyle.SPACING_8),
+
+        RoundedButton(
+          text: 'Clear Text',
+          onPress: onClear,
+          borderRadius: AppStyle.SPACING_24,
+          weight: FontWeight.w100
+        
         ),
-        const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: onLoadSample,
-          child: const Text('Load Sample'),
+        const SizedBox(width: AppStyle.SPACING_8),
+
+        RoundedButton(
+          text: 'Load Sample',
+          onPress: onLoadSample,
+          borderRadius: AppStyle.SPACING_24,
+          weight: FontWeight.w100
         ),
       ],
     );

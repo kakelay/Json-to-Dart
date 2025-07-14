@@ -1,20 +1,18 @@
-class MyModel {
+class ProductModel {
   final int? id;
   final String? name;
   final bool? isActive;
+  final Profile? profile;
 
-  final List<Items>? items;
+  ProductModel({this.id, this.name, this.isActive, this.profile});
 
-  MyModel({this.id, this.name, this.isActive, this.items});
-
-  factory MyModel.fromJson(Map<String, dynamic> json) {
-    return MyModel(
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
       id: json['id'],
       name: json['name'],
       isActive: json['isActive'],
-
-      items: json['items'] != null
-          ? List<Items>.from(json['items'].map((x) => Items.fromJson(x)))
+      profile: json['profile'] != null
+          ? Profile.fromJson(json['profile'])
           : null,
     );
   }
@@ -24,22 +22,22 @@ class MyModel {
       'id': id,
       'name': name,
       'isActive': isActive,
-      'items': items?.map((x) => x.toJson()).toList(),
+      'profile': profile?.toJson(),
     };
   }
 }
 
-class Items {
-  final String? title;
-  final double? price;
+class Profile {
+  final String? email;
+  final String? phone;
 
-  Items({this.title, this.price});
+  Profile({this.email, this.phone});
 
-  factory Items.fromJson(Map<String, dynamic> json) {
-    return Items(title: json['title'], price: json['price']);
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(email: json['email'], phone: json['phone']);
   }
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'price': price};
+    return {'email': email, 'phone': phone};
   }
 }

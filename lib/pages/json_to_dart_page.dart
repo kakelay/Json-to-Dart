@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:json_convert_dart/widgets/app_color.dart';
 import '../utils/json_to_dart_converter.dart';
 import '../widgets/json_input_panel.dart';
 import '../widgets/dart_output_panel.dart';
@@ -21,7 +22,9 @@ class JsonToDartPage extends StatefulWidget {
 
 class _JsonToDartPageState extends State<JsonToDartPage> {
   final TextEditingController _jsonController = TextEditingController();
-  final TextEditingController _classNameController = TextEditingController(text: 'MyModel');
+  final TextEditingController _classNameController = TextEditingController(
+    text: 'MyModel',
+  );
 
   String _dartCode = '';
   bool _nullSafety = true;
@@ -86,9 +89,9 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
 
   void _copyToClipboard() {
     Clipboard.setData(ClipboardData(text: _dartCode));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Copied to clipboard!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Copied to clipboard!')));
   }
 
   @override

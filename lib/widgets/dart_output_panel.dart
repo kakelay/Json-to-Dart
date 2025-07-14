@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:json_convert_dart/widgets/app_color.dart';
+import 'package:json_convert_dart/widgets/app_style.dart';
+import 'package:json_convert_dart/widgets/text_widget.dart';
 
 class DartOutputPanel extends StatelessWidget {
   final String dartCode;
@@ -20,9 +23,15 @@ class DartOutputPanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Dart Model Output:'),
-              IconButton(
-                icon: const Icon(Icons.copy),
-                onPressed: dartCode.isEmpty ? null : onCopy,
+              GestureDetector(
+                onTap: dartCode.isEmpty ? null : onCopy,
+                child: Row(
+                  children: [
+                    TextWidget('Copy Model', color: AppColors.appColor),
+                    const SizedBox(width: AppStyle.SPACING_8),
+                    Icon(Icons.copy),
+                  ],
+                ),
               ),
             ],
           ),

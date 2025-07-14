@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_convert_dart/widgets/app_color.dart';
 import 'pages/json_to_dart_page.dart';
 
 class JsonToDartApp extends StatefulWidget {
@@ -7,11 +8,13 @@ class JsonToDartApp extends StatefulWidget {
 }
 
 class _JsonToDartAppState extends State<JsonToDartApp> {
-  bool _isDarkMode = false;
+  bool _isDarkMode = true;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: AppColors.appColor,
+
       debugShowCheckedModeBanner: false,
       title: 'JSON to Dart Model',
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
