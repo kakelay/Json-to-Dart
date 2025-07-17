@@ -14,7 +14,6 @@ class _JsonToDartAppState extends State<JsonToDartApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       color: AppColors.appColor,
-
       debugShowCheckedModeBanner: false,
       title: 'JSON to Dart Model',
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),

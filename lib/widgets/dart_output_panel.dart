@@ -48,7 +48,10 @@ class DartOutputPanel extends StatelessWidget {
                   dartCode.isEmpty
                       ? 'Your Dart model will appear here...'
                       : dartCode,
-                  style: const TextStyle(fontFamily: 'Courier'),
+                  style: const TextStyle(
+                    fontFamily: 'Courier',
+                    color: AppColors.appColor,
+                  ),
                 ),
               ),
             ),

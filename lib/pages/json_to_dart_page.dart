@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 import 'package:json_convert_dart/widgets/app_color.dart';
+import 'package:json_convert_dart/widgets/app_style.dart';
+import 'package:json_convert_dart/widgets/text_widget.dart';
 import '../utils/json_to_dart_converter.dart';
 import '../widgets/json_input_panel.dart';
 import '../widgets/dart_output_panel.dart';
@@ -98,12 +101,30 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JSON to Dart Model'),
+        actionsPadding: EdgeInsets.symmetric(horizontal: AppStyle.SPACING_14),
+        backgroundColor: AppColors.appColor,
+        title: TextWidget(
+          'Json To Dart Model',
+          color: AppColors.white,
+          fontSize: AppStyle.SPACING_20,
+        ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(widget.isDarkMode ? Icons.light_mode : Icons.dark_mode),
-            onPressed: widget.toggleTheme,
+          GestureDetector(
+            onTap: widget.toggleTheme,
+            child: Row(
+              children: [
+                Icon(
+                  widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                  color: AppColors.white,
+                ),
+                Gap(AppStyle.SPACING_8),
+                TextWidget(
+                  widget.isDarkMode ? 'Light Mode' : 'Dart Mode',
+                  color: AppColors.white,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -111,7 +132,7 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
         builder: (context, constraints) {
           final isWide = constraints.maxWidth > 600;
           return Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.0),
             child: Column(
               children: [
                 Row(
@@ -129,6 +150,11 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
                     Row(
                       children: [
                         Checkbox(
+                          fillColor: MaterialStateProperty.resolveWith<Color>((
+                            Set<WidgetState> states,
+                          ) {
+                            return AppColors.white;
+                          }),
                           value: _nullSafety,
                           onChanged: (val) {
                             setState(() {
@@ -136,7 +162,8 @@ class _JsonToDartPageState extends State<JsonToDartPage> {
                             });
                           },
                         ),
-                        const Text('Null Safety'),
+
+                        TextWidget('Null Safety', color: AppColors.appColor),
                       ],
                     ),
                   ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:json_convert_dart/widgets/app_color.dart';
 import 'package:json_convert_dart/widgets/app_style.dart';
 import 'package:json_convert_dart/widgets/rounded_button.dart';
 
