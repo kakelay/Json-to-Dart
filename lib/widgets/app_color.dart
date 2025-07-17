@@ -16,6 +16,7 @@ class AppColors {
   static const orangeFFF6E0 = Color(0xFFFFF6E0);
   static const greyD7DDE4 = Color(0xFFD7DDE4);
   static const greyEBEFF5 = Color.fromARGB(255, 235, 239, 245);
+  // static const appColor =  Color(0xFF0066FF);
   static const appColor =  Color(0xFF0066FF);
   static const primary = Color(0xFF4A4B4D);
   static const secondary = Color(0xFF7C7D7E);

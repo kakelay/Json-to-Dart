@@ -29,7 +29,7 @@ class DartOutputPanel extends StatelessWidget {
                   children: [
                     TextWidget('Copy Model', color: AppColors.appColor),
                     const SizedBox(width: AppStyle.SPACING_8),
-                    Icon(Icons.copy),
+                    Icon(Icons.copy, size: AppStyle.SPACING_16),
                   ],
                 ),
               ),
